@@ -24,6 +24,7 @@ const createUser = async (request, response) => {
 // Controller function to login a user
 const loginUser = async (request, response) => {
   const { username, password } = request.body;
+  console.log("Login user:", username, password);
 
   try {
     // Find the user by username and password
