@@ -21,6 +21,9 @@ mongoose
 app.use(express.json());
 app.use("/users", userRoutes);
 app.use("/sleep", sleepDataRoutes);
+app.get("/", (request, response) => {
+  response.send("Hello World");
+});
 
 // Error handling
 app.use((error, request, response, next) => {
