@@ -7,6 +7,8 @@ const app = express();
 const userRoutes = require("./routes/userRoutes");
 const sleepDataRoutes = require("./routes/sleepDataRoutes");
 
+app.use(cors());
+
 const dbURI = process.env.DB_URI;
 const port = process.env.PORT;
 
