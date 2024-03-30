@@ -43,8 +43,26 @@ const loginUser = async (request, response) => {
   }
 };
 
+const changePassword = async (request, response) => {
+  const { username, oldPassword, newPassword } = request.body;
+  console.log("User change password:", username, oldPassword, newPassword);
+
+  try {
+    const user = await User.findOne({ username, password: oldPassword });
+    if (!user) {
+      return response.status(401).json({ error: "Invalid password" });
+    }
+    user.password = newPassword;
+    await user.save();
+    response.status(200).json({ success: true });
+  } catch (error) {
+    response.status(500).json({ error: error.message });
+  }
+};
+
 // Export the controller functions so they can be used in other files
 module.exports = {
   createUser,
   loginUser,
+  changePassword,
 };
