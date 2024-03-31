@@ -6,3 +6,7 @@ const activityDataSchema = new mongoose.Schema({
   steps: { type: Number, required: true },
   dayOfWeek: { type: Number, required: true },
 });
+
+const activityData = mongoose.model("activityData", activityDataSchema);
+
+module.exports = activityData;

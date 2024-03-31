@@ -8,9 +8,11 @@ const addSteps = async (request, response) => {
       username,
       date,
     });
+
     if (existingActivityData) {
       existingActivityData.steps = steps;
       await existingActivityData.save();
+
       response.status(200).json(existingActivityData);
     } else {
       const newActivityData = await activityDataModel.create({
@@ -28,7 +30,7 @@ const addSteps = async (request, response) => {
 
 const getSteps = async (request, response) => {
   const { username } = request.params;
-  console.log("Get steps:", username);
+  console.log("Get weekly steps:", username);
 
   try {
     const currentDate = new Date();
@@ -38,14 +40,14 @@ const getSteps = async (request, response) => {
     // Calculate the number of days in the current month
     const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
 
-    const activityData = await activityDataModel.find({
+    const stepsData = await activityDataModel.find({
       username,
       date: {
         $gte: new Date(`${currentYear}-${currentMonth}-01`),
         $lte: new Date(`${currentYear}-${currentMonth}-${daysInMonth}`),
       },
     });
-    response.status(200).json(activityData);
+    response.status(200).json(stepsData);
   } catch (error) {
     response.status(500).json({ error: error.message });
   }

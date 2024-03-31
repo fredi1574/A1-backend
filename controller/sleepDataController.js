@@ -2,7 +2,7 @@ const sleepDataModel = require("../models/sleepDataSchema");
 
 const addSleepData = async (request, response) => {
   const { username, date, sleepHours, dayOfWeek } = request.body;
-  console.log("Added sleep data:", username, date, sleepHours, dayOfWeek);
+  console.log("Add sleep data:", username, date, sleepHours, dayOfWeek);
   try {
     let existingSleepData = await sleepDataModel.findOne({
       username,
