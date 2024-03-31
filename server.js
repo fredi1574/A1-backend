@@ -6,6 +6,7 @@ const app = express();
 
 const userRoutes = require("./routes/userRoutes");
 const sleepDataRoutes = require("./routes/sleepDataRoutes");
+const activityDataRoutes = require("./routes/activityDataRoutes");
 
 app.use(cors());
 
@@ -21,6 +22,7 @@ mongoose
 app.use(express.json());
 app.use("/users", userRoutes);
 app.use("/sleep", sleepDataRoutes);
+app.use("/activity", activityDataRoutes);
 app.get("/", (request, response) => {
   response.send("Hello World");
 });
