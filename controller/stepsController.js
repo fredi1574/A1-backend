@@ -1,4 +1,4 @@
-const activityDataModel = require("../models/activityDataSchema");
+const activityDataModel = require("../models/stepsSchema");
 
 const addSteps = async (request, response) => {
   const { username, date, steps, dayOfWeek } = request.body;
@@ -53,48 +53,7 @@ const getSteps = async (request, response) => {
   }
 };
 
-const addActivity = async (request, response) => {
-  const { username, date, activityType } = request.body;
-  console.log("Add activity data:", username, date, activityType);
-
-  try {
-    let existingActivityData = await activityDataModel.findOne({
-      username,
-      date,
-    });
-
-    if (existingActivityData) {
-      existingActivityData.activityType = activityType;
-      await existingActivityData.save();
-      response.status(200).json(existingActivityData);
-    } else {
-      const newActivityData = await activityDataModel.create({
-        username,
-        date,
-        activityType,
-      });
-      response.status(201).json(newActivityData);
-    }
-  } catch (error) {
-    response.status(500).json({ error: error.message });
-  }
-};
-
-const getActivity = async (request, response) => {
-  const { username } = request.params;
-  console.log("Get activity data:", username);
-
-  try {
-    const activityData = await activityDataModel.find({ username });
-    response.status(200).json(activityData);
-  } catch (error) {
-    response.status(500).json({ error: error.message });
-  }
-};
-
 module.exports = {
   addSteps,
   getSteps,
-  addActivity,
-  getActivity,
 };
