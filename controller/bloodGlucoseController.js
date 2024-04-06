@@ -1,4 +1,4 @@
-const bloodGlocuseModel = require("../models/bloodGlucose");
+const bloodGlocuseModel = require("../models/bloodGlucoseSchema");
 
 const addGlucose = async (request, response) => {
   const { username, hour, date, glucose } = request.body;
