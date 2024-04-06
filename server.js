@@ -8,6 +8,7 @@ const userRoutes = require("./routes/userRoutes");
 const sleepDataRoutes = require("./routes/sleepDataRoutes");
 const activityDataRoutes = require("./routes/activityDataRoutes");
 const bloodPressureRoutes = require("./routes/bloodPressureRoutes");
+const bloodGlucoseRoutes = require("./routes/bloodGlucoseRoutes");
 
 app.use(cors());
 
@@ -25,6 +26,7 @@ app.use("/users", userRoutes);
 app.use("/sleep", sleepDataRoutes);
 app.use("/activity", activityDataRoutes);
 app.use("/bloodPressure", bloodPressureRoutes);
+app.use("/bloodGlucose", bloodGlucoseRoutes);
 app.get("/", (request, response) => {
   response.send("Hello World");
 });
