@@ -2,13 +2,20 @@ const bloodPressureModel = require("../models/bloodPressureSchema");
 
 const addPressure = async (request, response) => {
   const { username, hour, date, systolic, diastolic } = request.body;
-  console.log("Add blood pressure:", username, hour, date, systolic, diastolic);
+  console.log(
+    "Add blood pressure:",
+    username,
+    hour,
+    new Date(date),
+    systolic,
+    diastolic
+  );
 
   try {
     let existingPressure = await bloodPressureModel.findOne({
       username,
       hour,
-      date,
+      date: new Date(new Date(date).setUTCHours(0, 0, 0, 0)),
     });
     if (existingPressure) {
       existingPressure.systolic = systolic;
@@ -19,10 +26,11 @@ const addPressure = async (request, response) => {
       const newPressure = await bloodPressureModel.create({
         username,
         hour,
-        date,
+        date: new Date(new Date(date).setUTCHours(0, 0, 0, 0)),
         systolic,
         diastolic,
       });
+      console.log(newPressure);
       response.status(201).json(newPressure);
     }
   } catch (error) {
@@ -32,14 +40,17 @@ const addPressure = async (request, response) => {
 
 const getPressure = async (request, response) => {
   const { username } = request.params;
-  const today = new Date().toLocaleDateString("en-IL");
 
-  console.log("Get blood pressure:", username, today);
+  console.log(
+    "Get blood pressure:",
+    username,
+    new Date().setUTCHours(0, 0, 0, 0)
+  );
 
   try {
     const pressureData = await bloodPressureModel.find({
       username,
-      date: today,
+      date: new Date().setUTCHours(0, 0, 0, 0),
     });
     response.status(200).json(pressureData);
   } catch (error) {
@@ -54,8 +65,8 @@ const getMonthlyPressure = async (request, response) => {
 
     // Get the current month and year
     const currentDate = new Date();
-    const currentMonth = currentDate.getMonth();
     const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
 
     console.log(`Current month: ${currentMonth}, Current year: ${currentYear}`);
 
